@@ -1,0 +1,502 @@
+/* ========================================
+   RETRO FOOTBALL AUCTIONEER - CLASSIFIED DOSSIER
+   Vintage Lab / Scout Report Style
+======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap');
+
+:root {
+    --paper-bg: #fdfbf7;
+    --paper-texture: #f0e6d2;
+    --ink-red: #d93025;
+    /* Stamp Red */
+    --ink-black: #1a1a1a;
+    /* Typed Black */
+    --ink-blue: #1a0dab;
+    /* Typewriter Blue */
+    --grid-line: #e0e0e0;
+    --stamp-border: 3px solid var(--ink-red);
+
+    --font-typewriter: 'Special Elite', monospace;
+    /* For stamps/headers */
+    --font-tech: 'Share Tech Mono', monospace;
+    /* For data */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e6e0d4;
+    font-family: var(--font-tech);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-image:
+        radial-gradient(#d4cdbfff 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- PAPER TEXTURE CARD --- */
+.paper-card {
+    background: var(--paper-bg);
+    padding: 30px;
+    box-shadow:
+        1px 1px 0 rgba(0, 0, 0, 0.1),
+        3px 3px 0 rgba(0, 0, 0, 0.05),
+        8px 8px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border: 1px solid #d4cdbf;
+}
+
+/* Paper Grain Overlay */
+.paper-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* --- HEADER --- */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed var(--ink-black);
+    padding-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    font-family: var(--font-typewriter);
+    font-size: 24px;
+    color: var(--ink-black);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-family: var(--font-tech);
+    font-size: 12px;
+    color: var(--ink-red);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* --- FILTERS (CONTROL PANEL) --- */
+.filters-section {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--ink-black);
+    padding: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.section-title {
+    font-size: 10px;
+    color: var(--ink-black);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: var(--ink-black);
+    color: var(--paper-bg);
+    display: inline-block;
+    padding: 2px 4px;
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.filter-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.filter-label {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+select,
+input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #999;
+    color: var(--ink-black);
+    font-family: var(--font-tech);
+    padding: 6px;
+    font-size: 14px;
+    outline: none;
+    border-radius: 0;
+}
+
+select:focus,
+input:focus {
+    border-color: var(--ink-blue);
+    background: rgba(26, 13, 171, 0.05);
+}
+
+/* CLUB SCROLL CONTAINER */
+.club-scroll-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    max-height: 120px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: #fff;
+}
+
+.club-checkbox-item {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    color: var(--ink-black);
+    cursor: pointer;
+}
+
+.club-checkbox-item input {
+    width: auto;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* Scrollbar styling */
+.club-scroll-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.club-scroll-container::-webkit-scrollbar-thumb {
+    background-color: var(--ink-dim);
+    border-radius: 3px;
+}
+
+
+/* --- PLAYER REPORT (MAIN DISPLAY) --- */
+.player-panel {
+    min-height: 500px;
+    position: relative;
+    z-index: 1;
+    border: 2px solid var(--ink-black);
+    padding: 2px;
+    /* Inner frame */
+}
+
+#player-display {
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* CARD LAYOUT - DOSSIER STYLE */
+.card-header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--ink-black);
+    padding-bottom: 10px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.classification {
+    font-size: 10px;
+    color: var(--ink-red);
+    font-family: var(--font-tech);
+    letter-spacing: 2px;
+    font-weight: bold;
+    border: 1px solid var(--ink-red);
+    padding: 2px 6px;
+}
+
+.barcode {
+    font-family: 'Libre Barcode 39', cursive;
+    /* Fallback if not loaded, use simple text lines */
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: #444;
+}
+
+.player-name {
+    font-family: var(--font-typewriter);
+    font-size: 32px;
+    text-transform: uppercase;
+    color: var(--ink-blue);
+    font-weight: bold;
+    line-height: 1.1;
+}
+
+.player-meta {
+    font-size: 14px;
+    color: #555;
+    margin-top: 4px;
+}
+
+/* STAMP EFFECT */
+.tier-stamp {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    font-family: var(--font-typewriter);
+    font-size: 48px;
+    color: var(--ink-red);
+    border: 4px solid var(--ink-red);
+    padding: 5px 15px;
+    border-radius: 4px;
+    transform: rotate(-15deg);
+    opacity: 0.8;
+    text-transform: uppercase;
+    font-weight: bold;
+    mix-blend-mode: multiply;
+    /* Realistic ink blend */
+    mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='white'/%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+    mask-size: cover;
+    pointer-events: none;
+    z-index: 10;
+    animation: stamp-smash 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes stamp-smash {
+    0% {
+        transform: rotate(-15deg) scale(2);
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotate(-15deg) scale(1);
+        opacity: 0.8;
+    }
+}
+
+.info-grid {
+    display: grid;
+    gap: 8px;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    border-bottom: 1px dotted #ccc;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row .label {
+    font-weight: bold;
+    color: #444;
+}
+
+.info-row .value {
+    color: var(--ink-black);
+}
+
+/* STATS */
+.stats-container {
+    margin-bottom: 20px;
+}
+
+.stats-header {
+    font-size: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--ink-black);
+    margin-bottom: 10px;
+    color: var(--ink-black);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--ink-black);
+    /* Borders */
+    border: 1px solid var(--ink-black);
+}
+
+.stat-box {
+    background: var(--paper-bg);
+    padding: 8px;
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 9px;
+    font-weight: bold;
+    color: #666;
+}
+
+.stat-val {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--ink-blue);
+    font-family: var(--font-typewriter);
+}
+
+/* MARKET SECTION */
+.market-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #d4cdbf;
+}
+
+.market-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--ink-black);
+}
+
+/* FOOTER */
+.card-footer {
+    margin-top: auto;
+    text-align: center;
+    border: 3px double var(--ink-red);
+    padding: 15px;
+    position: relative;
+    background: rgba(217, 48, 37, 0.05);
+    /* Slight red tint */
+}
+
+.bid-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--ink-red);
+    letter-spacing: 1px;
+}
+
+.bid-value {
+    font-size: 36px;
+    font-family: var(--font-typewriter);
+    color: var(--ink-red);
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.footer-note {
+    font-size: 9px;
+    color: var(--ink-red);
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* --- CONTROLS --- */
+.next-player-btn {
+    width: 100%;
+    padding: 20px;
+    background: var(--ink-red);
+    color: var(--paper-bg);
+    border: none;
+    font-family: var(--font-typewriter);
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #99221a;
+    /* 3D effect */
+    transition: all 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.next-player-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #99221a;
+}
+
+.reset-btn {
+    display: block;
+    width: fit-content;
+    margin: 15px auto;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    color: #666;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: var(--font-tech);
+}
+
+.reset-btn:hover {
+    color: var(--ink-red);
+}
+
+/* --- STARTUP SCREEN --- */
+.startup-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ccc;
+    padding: 40px;
+    color: #999;
+}
+
+/* No-Players State */
+.empty-state {
+    text-align: center;
+    color: var(--ink-red);
+    font-weight: bold;
+    padding: 40px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .tier-stamp {
+        font-size: 32px;
+        right: 10px;
+        top: 40px;
+    }
+
+    .player-name {
+        font-size: 24px;
+    }
+
+    .bid-value {
+        font-size: 28px;
+    }
+
+    .club-scroll-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}

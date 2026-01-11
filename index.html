@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETRO FOOTBALL AUCTIONEER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="title">FOOTBALL AUCTIONEER</div>
+            <div class="subtitle">PROCEDURAL PLAYER GENERATOR V3.7</div>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="filters-section">
+            <div class="section-title">MISSION PARAMETERS</div>
+
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <div class="filter-label">TARGET ERA</div>
+                    <select id="era-filter">
+                        <option value="all">ALL ERAS</option>
+                        <option value="modern">MODERN (2018-2025)</option>
+                        <option value="legends">LEGENDS (1990-2015)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-label">LEAGUE</div>
+                    <select id="league-filter">
+                        <option value="all">GLOBAL SEARCH</option>
+                        <option value="Premier League">PREMIER LEAGUE</option>
+                        <option value="La Liga">LA LIGA</option>
+                        <option value="Serie A">SERIE A</option>
+                        <option value="Bundesliga">BUNDESLIGA</option>
+                        <option value="Ligue 1">LIGUE 1</option>
+                        <option value="International">INTERNATIONAL</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-label">POSITION</div>
+                    <select id="position-filter">
+                        <option value="all">ANY POSITION</option>
+                        <option value="GK">GOALKEEPER</option>
+                        <option value="DEF">DEFENDER (CB/LB/RB)</option>
+                        <option value="MID">MIDFIELDER (CM/CAM/CDM)</option>
+                        <option value="FWD">FORWARD (ST/RW/LW)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-label">MIN MARKET VAL</div>
+                    <select id="tier-filter">
+                        <option value="all">ANY TIER</option>
+                        <option value="S">S - ICON</option>
+                        <option value="A">A - STAR</option>
+                        <option value="B">B - PRO</option>
+                        <option value="C">C - ROOKIE</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- NEW CLUB FILTERS -->
+            <div class="filter-group full-width" style="margin-top: 10px;">
+                <div class="filter-label">CLUB DOSSIER (MULTI-SELECT)</div>
+                <div id="club-filters-container" class="club-scroll-container">
+                    <!-- Dynamic Checkboxes will be injected here by script.js -->
+                </div>
+            </div>
+
+            <div class="filter-group" style="margin-top: 15px;">
+                <div class="filter-label">TOTAL BUDGET ($M)</div>
+                <input type="number" id="budget-input" value="100">
+            </div>
+        </div>
+
+        <!-- PLAYER DISPLAY -->
+        <div class="player-panel">
+            <div id="player-display" class="typing">
+                <div class="startup-screen">
+                    <div class="system-msg">SYSTEM READY...</div>
+                    <div class="system-msg">AWAITING INPUT</div>
+                    <div class="blink-cursor">_</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <button id="next-player-btn" class="next-player-btn">GENERATE TARGET</button>
+
+        <div class="stats-bar" style="margin-top: 10px; text-align: center;">
+            <span id="players-shown">0</span> PLAYERS SHOWN / <span id="players-remaining">0</span> REMAINING
+        </div>
+
+        <button id="reset-btn" class="reset-btn">RESET SESSION</button>
+    </div>
+
+    <script src="players.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
