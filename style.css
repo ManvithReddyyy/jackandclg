@@ -10,6 +10,8 @@
     --paper-texture: #f0e6d2;
     --ink-red: #d93025;
     /* Stamp Red */
+    --ink-green: #2e7d32;
+    /* Up Arrow */
     --ink-black: #1a1a1a;
     /* Typed Black */
     --ink-blue: #1a0dab;
@@ -191,7 +193,7 @@ input:focus {
 }
 
 .club-scroll-container::-webkit-scrollbar-thumb {
-    background-color: var(--ink-dim);
+    background-color: var(--ink-red);
     border-radius: 3px;
 }
 
@@ -382,7 +384,28 @@ input:focus {
     font-size: 20px;
     font-weight: bold;
     color: var(--ink-black);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
+/* FORM ARROWS */
+.form-arrow {
+    font-size: 16px;
+}
+
+.form-up {
+    color: var(--ink-green);
+}
+
+.form-down {
+    color: var(--ink-red);
+}
+
+.form-stable {
+    color: #888;
+}
+
 
 /* FOOTER */
 .card-footer {

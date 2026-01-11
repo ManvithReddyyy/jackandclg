@@ -214,7 +214,7 @@ class RetroAuctioneer {
         }
     }
 
-    renderPlayerCard(player, baseBid, stats) {
+    renderPlayerCard(player, baseBid, stats, dynamicValue, formArrow, formClass) {
         // Construct the detailed view
         // Generate stats HTML
         let statsHtml = '';
@@ -265,8 +265,11 @@ class RetroAuctioneer {
                 </div>
 
                 <div class="market-section">
-                    <span class="label">MARKET VALUE</span>
-                    <div class="market-value">$${player.marketValue}M</div>
+                    <span class="label">MARKET VALUE (FORM)</span>
+                    <div class="market-value">
+                        $${dynamicValue}M 
+                        <span class="form-arrow form-${formClass}" style="margin-left: 10px;">${formArrow}</span>
+                    </div>
                 </div>
             </div>
 
@@ -308,11 +311,37 @@ class RetroAuctioneer {
         this.usedPlayers.add(player.name);
         this.playersShown++;
 
+        // MARKET VOLATILITY SYSTEM
+        // Random fluctuation between -20% and +20%
+        const volatility = 0.8 + Math.random() * 0.4;
+        const dynamicValue = Math.round(player.marketValue * volatility);
+
+        // Determine Form Arrow
+        let formArrow = '➖'; // Stable
+        let formClass = 'stable';
+        if (volatility > 1.05) { formArrow = '▲'; formClass = 'up'; }
+        if (volatility < 0.95) { formArrow = '▼'; formClass = 'down'; }
+
         const budget = parseFloat(this.budgetInput.value) || 100;
-        const baseBid = this.calculateBaseBid(player.tier, budget);
+
+        // Base Bid heavily influenced by the DYNAMIC value, not just tier
+        // This ensures Haaland (180M) costs more than De Bruyne (45M) even if both S Tier
+        // We map the player's dynamic value to a percentage of the user's budget
+        // But keep it within reasonable bounds so it doesn't exceed budget
+
+        // Formula: (DynamicValue / 300) * Budget * RandomFactor
+        let bidRatio = (dynamicValue / 300);
+        // Clamp ratio to reasonable limits for the game (e.g. min 5% of budget, max 60%)
+        if (bidRatio < 0.05) bidRatio = 0.05;
+        if (bidRatio > 0.60) bidRatio = 0.60;
+
+        // Add some auction randomness (+/- 10%)
+        const auctionRandomness = 0.9 + Math.random() * 0.2;
+        const baseBid = (budget * bidRatio * auctionRandomness).toFixed(1);
+
         const stats = this.generateStats(player.position, player.tier);
 
-        this.renderPlayerCard(player, baseBid, stats);
+        this.renderPlayerCard(player, baseBid, stats, dynamicValue, formArrow, formClass);
         this.updateStats();
     }
 
