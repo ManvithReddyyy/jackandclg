@@ -3,7 +3,7 @@ const PLAYERS_DATABASE = require('../data/players');
 
 async function seedDatabase() {
     console.log(`Starting migration of ${PLAYERS_DATABASE.length} players...`);
-
+//code base
     // 1. Create Table Check (Manual step usually, but we can log the schema)
     console.log('\nIMPORTANT: Ensure you have run this SQL in your Supabase SQL Editor:');
     console.log(`
